@@ -3,14 +3,15 @@ const isArray = (obj) => {
 };
 
 const recursivelyLowercaseJSONKeys = (obj) => {
-  if (typeof obj !== 'object' || obj === null) {
-    return obj;
+  const copyOfObj = obj;
+  if (typeof copyOfObj !== 'object' || copyOfObj === null) {
+    return copyOfObj;
   }
-  if (isArray(obj)) {
-    return obj.map(o => recursivelyLowercaseJSONKeys(o));
+  if (isArray(copyOfObj)) {
+    return copyOfObj.map(o => recursivelyLowercaseJSONKeys(o));
   }
-  return Object.keys(obj).reduce((prev, curr) => {
-    prev[curr.toLowerCase()] = recursivelyLowercaseJSONKeys(obj[curr]);
+  return Object.keys(copyOfObj).reduce((prev, curr) => {
+    prev[curr.toLowerCase()] = recursivelyLowercaseJSONKeys(copyOfObj[curr]);
     return prev;
   }, {});
 };
